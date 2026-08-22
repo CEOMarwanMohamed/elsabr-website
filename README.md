@@ -71,11 +71,13 @@ never stranded.
 
 - **Catalog data is demo data.** The design says so on the page itself, and
   `src/data/catalog.ts` is generated from it. Replace with real products.
-- **The six ورق التصوير product photos are missing.** `src/data/catalog.ts` still
-  points at `/assets/cat-cp1..6.webp`; drop those files into `public/assets/`
-  and the photos appear with no code change. Until then each card falls back to
-  a monogram block. (In the source design, `cat-cp1` and `cat-cp2` are the same
-  image.)
+- **The six ورق التصوير product photos are not in this repo.** Every product has
+  `image: null` and renders a monogram block instead. The original filenames are
+  kept beside each one as `// design asset: assets/cat-cpN.webp`. To restore a
+  photo: copy the file into `public/assets/` and set `image` to its path.
+  `ProductCard` falls back to the monogram if an image fails to load, so a wrong
+  path degrades quietly rather than showing a broken image. (In the source
+  design, `cat-cp1` and `cat-cp2` are the same image.)
 - **The home page quote form has no backend.** It validates input and then hands
   the request to the visitor's mail client via `mailto:`. Replace `sendQuote()`
   in `src/components/QuoteForm.tsx` with a real endpoint (a Cloudflare Pages

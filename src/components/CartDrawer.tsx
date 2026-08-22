@@ -48,8 +48,9 @@ export function CartDrawer() {
         aria-modal="true"
         aria-label="سلة الطلب"
         aria-hidden={!isOpen}
-        // Keep the hidden panel out of the tab order.
-        {...(isOpen ? {} : { inert: '' as unknown as boolean })}
+        // Keep the closed panel out of the tab order. React 19 renders `inert`
+        // from a real boolean — a cast string is dropped silently.
+        inert={!isOpen}
       >
         <div className={styles.head}>
           <div>

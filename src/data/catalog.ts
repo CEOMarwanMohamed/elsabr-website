@@ -38,7 +38,8 @@ export const catalog: CatalogSection[] = [
         price: 1180,
         inStock: true,
         availability: "متوفر",
-        image: "/assets/cat-cp1.webp",
+        // design asset: assets/cat-cp1.webp
+        image: null,
         imageAlt: "صورة ورق A4 80 جرام",
       },
       {
@@ -49,7 +50,8 @@ export const catalog: CatalogSection[] = [
         price: 1040,
         inStock: true,
         availability: "متوفر",
-        image: "/assets/cat-cp2.webp",
+        // design asset: assets/cat-cp2.webp
+        image: null,
         imageAlt: "صورة ورق A4 70 جرام",
       },
       {
@@ -60,7 +62,8 @@ export const catalog: CatalogSection[] = [
         price: 2290,
         inStock: true,
         availability: "متوفر",
-        image: "/assets/cat-cp3.webp",
+        // design asset: assets/cat-cp3.webp
+        image: null,
         imageAlt: "صورة ورق A3",
       },
       {
@@ -71,7 +74,8 @@ export const catalog: CatalogSection[] = [
         price: 165,
         inStock: true,
         availability: "متوفر",
-        image: "/assets/cat-cp4.webp",
+        // design asset: assets/cat-cp4.webp
+        image: null,
         imageAlt: "صورة ورق ملون",
       },
       {
@@ -82,7 +86,8 @@ export const catalog: CatalogSection[] = [
         price: 1320,
         inStock: true,
         availability: "متوفر",
-        image: "/assets/cat-cp5.webp",
+        // design asset: assets/cat-cp5.webp
+        image: null,
         imageAlt: "صورة ورق A5",
       },
       {
@@ -93,7 +98,8 @@ export const catalog: CatalogSection[] = [
         price: 320,
         inStock: false,
         availability: "تحت الطلب",
-        image: "/assets/cat-cp6.webp",
+        // design asset: assets/cat-cp6.webp
+        image: null,
         imageAlt: "صورة ورق 100 جرام",
       },
     ],

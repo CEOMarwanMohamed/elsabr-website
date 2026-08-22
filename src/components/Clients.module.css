@@ -33,6 +33,18 @@
   direction: ltr;
 }
 
+/* Defined here rather than in global.css: CSS Modules scopes the
+   animation-name in this file, so the keyframes must be local too or the
+   scoped name resolves to nothing and the marquee silently sits still. */
+@keyframes sabr-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
 .track {
   display: flex;
   width: max-content;

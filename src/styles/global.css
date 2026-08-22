@@ -140,15 +140,6 @@ bdi {
   border: 0;
 }
 
-@keyframes sabr-marquee {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
-}
-
 @media (max-width: 900px) {
   :root {
     --gutter: 24px;

@@ -21,6 +21,22 @@ export default function Catalog() {
     window.history.replaceState(null, '', `#${tab}`);
   }, [tab]);
 
+  // ...and follow the hash when it changes underneath us — the back button, a
+  // pasted link, or an edited address bar. Without this the URL and the visible
+  // tab drift apart.
+  useEffect(() => {
+    const sync = () => {
+      const id = window.location.hash.replace('#', '');
+      if (catalog.some((s) => s.id === id)) setTab(id);
+    };
+    window.addEventListener('hashchange', sync);
+    window.addEventListener('popstate', sync);
+    return () => {
+      window.removeEventListener('hashchange', sync);
+      window.removeEventListener('popstate', sync);
+    };
+  }, []);
+
   const section = catalog.find((s) => s.id === tab) ?? catalog[0];
 
   const products = useMemo(() => {
