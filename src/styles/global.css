@@ -1,0 +1,169 @@
+/* Design tokens lifted from the Claude Design canvas (الصبر - الصفحة الرئيسية) */
+:root {
+  /* Brand */
+  --ink: #0a1f3d;
+  --ink-soft: #133055;
+  --ink-line: #1b3557;
+  --green: #2e7d32;
+  --green-dark: #1e5a22;
+  --green-border: #c2dcc3;
+  --gold: #c79a1a;
+  --gold-dark: #8a6a0a;
+  --gold-border: #e6d6a6;
+  --gold-tint: #f6ecd3;
+  --sand: #e8d9a8;
+
+  /* Surfaces */
+  --bg: #f2f2f2;
+  --bg-alt: #e8e8e8;
+  --surface: #ffffff;
+  --surface-muted: #fafafa;
+
+  /* Lines */
+  --border: #dadada;
+  --border-strong: #c4c4c4;
+  --border-soft: #e6e6e6;
+  --border-input: #d0d0d0;
+  --border-faint: #eaeaea;
+  --border-mid: #cbcbcb;
+
+  /* Text */
+  --text: #0a1f3d;
+  --text-body: #3f3f3f;
+  --text-muted: #4f4f4f;
+  --text-dim: #6e6e6e;
+  --text-faint: #7c7c7c;
+  --text-ghost: #8c8c8c;
+  --text-invert: #f2f2f2;
+  --text-on-dark: #9e9e9e;
+  --text-on-dark-strong: #bebebe;
+  --text-label: #5f5f5f;
+  --text-nav: #333333;
+
+  /* Type */
+  --font-body: 'IBM Plex Sans Arabic', system-ui, -apple-system, sans-serif;
+  --font-display: 'Readex Pro', 'IBM Plex Sans Arabic', sans-serif;
+
+  /* Layout */
+  --page-max: 1360px;
+  --gutter: 48px;
+  --radius: 2px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  /* "clip" (not "hidden") so the fanned card stack can spill without
+     creating a scroll container that breaks the sticky header. */
+  overflow-x: clip;
+}
+
+body {
+  font-family: var(--font-body);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: var(--green);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--green-dark);
+}
+
+::selection {
+  background: var(--sand);
+}
+
+img {
+  max-width: 100%;
+}
+
+button,
+input {
+  font-family: inherit;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-display);
+  text-wrap: balance;
+}
+
+/* Numerals stay LTR inside RTL copy */
+bdi {
+  font-variant-numeric: tabular-nums;
+}
+
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+}
+
+.section {
+  padding: 100px var(--gutter);
+}
+
+.shell {
+  max-width: var(--page-max);
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-size: 14px;
+  color: var(--text-faint);
+  letter-spacing: 1.5px;
+  margin-bottom: 16px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@keyframes sabr-marquee {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 900px) {
+  :root {
+    --gutter: 24px;
+  }
+  .section {
+    padding: 64px var(--gutter);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+}

@@ -1,0 +1,80 @@
+.footer {
+  background: var(--ink);
+  color: var(--text-on-dark);
+  padding: 64px var(--gutter) 40px;
+}
+
+.top {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  gap: 48px;
+  flex-wrap: wrap;
+  padding-bottom: 40px;
+  border-bottom: 1px solid var(--ink-line);
+}
+
+.brand {
+  max-width: 340px;
+}
+
+.logo {
+  height: 64px;
+  width: auto;
+  display: block;
+  margin-bottom: 18px;
+}
+
+.blurb {
+  font-size: 15.5px;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.cols {
+  display: flex;
+  gap: 72px;
+  flex-wrap: wrap;
+  font-size: 15.5px;
+}
+
+.col {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.colHead {
+  color: var(--text-label);
+  font-size: 13.5px;
+  letter-spacing: 1px;
+}
+
+.spaced {
+  margin-top: 12px;
+}
+
+.col a {
+  color: var(--text-on-dark);
+}
+
+.col a:hover {
+  color: #fff;
+}
+
+.legal {
+  max-width: var(--page-max);
+  margin: 24px auto 0;
+  font-size: 13.5px;
+  color: var(--text-label);
+}
+
+@media (max-width: 900px) {
+  .footer {
+    padding: 48px var(--gutter) 32px;
+  }
+  .cols {
+    gap: 40px;
+  }
+}

@@ -1,0 +1,173 @@
+.wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 22px;
+  padding: 8px 0 4px;
+}
+
+.stack {
+  position: relative;
+  width: 100%;
+  max-width: 428px;
+  min-height: 500px;
+  touch-action: none;
+  user-select: none;
+}
+
+.sheet {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: 448px;
+  overflow: hidden;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  box-shadow: 0 26px 60px -34px rgba(10, 31, 61, 0.42);
+  padding: 30px 30px 26px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  transform-origin: 50% 92%;
+  will-change: transform;
+}
+
+.sheetHead {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.counter {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  letter-spacing: 1.5px;
+  margin-bottom: 8px;
+}
+
+.sheetTitle {
+  font-family: var(--font-display);
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.25;
+}
+
+.badge {
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  padding: 5px 10px;
+  white-space: nowrap;
+}
+
+.badgeIn {
+  color: var(--green);
+  border: 1px solid var(--green-border);
+}
+
+.badgeOrder {
+  color: var(--gold-dark);
+  border: 1px solid var(--gold-border);
+}
+
+.lines {
+  display: flex;
+  flex-direction: column;
+}
+
+.line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.line:last-child {
+  border-bottom: none;
+}
+
+.lineItem {
+  font-size: 16.5px;
+}
+
+.lineUnit {
+  font-size: 13.5px;
+  color: var(--text-ghost);
+}
+
+.sheetFoot {
+  margin-top: auto;
+  padding-top: 18px;
+  border-top: 1px solid #dedede;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.hint {
+  font-size: 14px;
+  color: var(--text-dim);
+}
+
+.footLink {
+  font-size: 14.5px;
+  white-space: nowrap;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 9px;
+  height: 3px;
+  background: var(--border-input);
+  display: block;
+  transition:
+    transform 0.3s ease,
+    background 0.3s ease;
+}
+
+.next {
+  background: none;
+  border: 1px solid var(--border-strong);
+  color: var(--text-nav);
+  font-size: 14.5px;
+  padding: 9px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  white-space: nowrap;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.next:hover {
+  border-color: var(--ink);
+  background: var(--bg-alt);
+}
+
+@media (max-width: 560px) {
+  .stack {
+    min-height: 470px;
+  }
+  .sheet {
+    height: 430px;
+    padding: 24px 22px 22px;
+  }
+  .sheetTitle {
+    font-size: 24px;
+  }
+}

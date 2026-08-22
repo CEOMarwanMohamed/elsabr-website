@@ -1,0 +1,80 @@
+.head {
+  max-width: 700px;
+  margin-bottom: 56px;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 44px;
+  letter-spacing: -1.1px;
+  margin: 0;
+  line-height: 1.3;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.cell {
+  background: var(--surface);
+  padding: 34px 32px;
+  display: grid;
+  gap: 14px;
+  align-content: start;
+}
+
+.labelProblem {
+  font-size: 15px;
+  color: var(--gold);
+}
+
+.labelAnswer {
+  font-size: 15px;
+  color: var(--green);
+}
+
+.quote {
+  font-family: var(--font-display);
+  font-weight: 300;
+  font-size: 22px;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--text-muted);
+}
+
+.rule {
+  height: 1px;
+  background: var(--border-soft);
+  margin: 6px 0;
+}
+
+.answer {
+  font-size: 17px;
+  line-height: 1.75;
+  margin: 0;
+  color: var(--ink-soft);
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 32px;
+    letter-spacing: -0.8px;
+  }
+  .head {
+    margin-bottom: 36px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+  .cell {
+    padding: 26px 22px;
+  }
+  .quote {
+    font-size: 19px;
+  }
+}

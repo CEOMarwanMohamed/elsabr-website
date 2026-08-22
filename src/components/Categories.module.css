@@ -1,0 +1,104 @@
+.head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 40px;
+  margin-bottom: 56px;
+  flex-wrap: wrap;
+}
+
+.title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: 48px;
+  letter-spacing: -1.2px;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.aside {
+  max-width: 400px;
+}
+
+.aside p {
+  font-size: 17px;
+  color: var(--text-muted);
+  margin: 0 0 16px;
+  line-height: 1.75;
+}
+
+.asideLink {
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 32px 30px 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  transition: border-color 0.2s ease;
+}
+
+.card:hover {
+  border-color: var(--ink);
+}
+
+.no {
+  font-family: var(--font-display);
+  font-size: 14px;
+  color: var(--green);
+}
+
+.cardTitle {
+  font-family: var(--font-display);
+  font-weight: 500;
+  font-size: 23px;
+  margin: 0 0 8px;
+}
+
+.blurb {
+  font-size: 15.5px;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0;
+}
+
+.foot {
+  margin-top: auto;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-soft);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.availability {
+  font-size: 14px;
+  color: var(--green);
+}
+
+.foot a {
+  font-size: 14.5px;
+}
+
+@media (max-width: 900px) {
+  .title {
+    font-size: 34px;
+    letter-spacing: -0.8px;
+  }
+  .head {
+    margin-bottom: 36px;
+  }
+  .grid {
+    grid-template-columns: 1fr;
+  }
+}
