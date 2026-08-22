@@ -1,12 +1,21 @@
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import { CartProvider } from './cart/CartContext';
+import { CartFab } from './components/CartButton';
+import { CartDrawer } from './components/CartDrawer';
 import { Footer } from './components/Footer';
+import { FooterSlim } from './components/FooterSlim';
 import { Header } from './components/Header';
+import { ScrollToHash } from './components/ScrollToHash';
 import Catalog from './pages/Catalog';
 import Home from './pages/Home';
 
-export default function App() {
+function Shell() {
+  const { pathname } = useLocation();
+  const onCatalog = pathname === '/catalog';
+
   return (
     <>
+      <ScrollToHash />
       <Header />
       <main>
         <Routes>
@@ -15,7 +24,17 @@ export default function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
-      <Footer />
+      {onCatalog ? <FooterSlim /> : <Footer />}
+      <CartDrawer />
+      <CartFab />
     </>
+  );
+}
+
+export default function App() {
+  return (
+    <CartProvider>
+      <Shell />
+    </CartProvider>
   );
 }
