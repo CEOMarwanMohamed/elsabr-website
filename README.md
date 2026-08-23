@@ -25,7 +25,7 @@ npm run preview    # serve the production build locally
 ## Project layout
 
 ```
-public/assets/        logos (elsabr-logo.png, elsabr-logo-light.png)
+public/assets/        brand marks + client logos
 public/_redirects     SPA fallback for Cloudflare Pages
 public/_headers       cache + security headers
 src/data/site.ts      home page copy and contact details
@@ -86,10 +86,29 @@ never stranded.
   phone (`0100 000 0000`), WhatsApp number, and email (`sales@example.com`).
   The design's home page had an invalid `tel:+2001000000000`; the valid form
   from the catalog page is used throughout.
-- **Client logos are placeholders** — the marquee in `src/components/Clients.tsx`
-  renders eight empty slots.
 
 ## Deploying to Cloudflare Pages
+
+Deployment is handled by the **Cloudflare Pages Git integration**, which builds
+this repo itself on every push to `main`. Its build settings live in the
+dashboard (Workers & Pages → elsabr-website → Settings → Build) and must be:
+
+- Build command: `npm run build`
+- Deploy command: `npx wrangler pages deploy dist`
+- Build output directory: `dist`
+
+Both of the first two matter. An empty build command leaves no `dist/` for the
+deploy step to upload, and the deploy command has to be `wrangler pages deploy`:
+plain `wrangler deploy` is the Workers command, and on a Pages project it looks
+for a `main` entry-point or an `[assets]` block, finds `pages_build_output_dir`
+instead, and fails. `--project-name` is unnecessary because `name` is already
+set in `wrangler.toml`.
+
+`.github/workflows/ci.yml` builds on every push and pull request but does **not**
+deploy, so the two systems cannot race over the same commit. If you ever move
+deployment back to GitHub Actions, disconnect the Git integration first and add
+`CLOUDFLARE_API_TOKEN` (needs **Cloudflare Pages: Edit**) and
+`CLOUDFLARE_ACCOUNT_ID` as repository secrets.
 
 ### One-off deploy from your machine
 
@@ -97,22 +116,3 @@ never stranded.
 npx wrangler login
 npm run deploy
 ```
-
-### Automatic deploys from GitHub
-
-`.github/workflows/deploy.yml` builds on every push and pull request, and
-publishes to Cloudflare Pages once these two repository secrets exist:
-
-- `CLOUDFLARE_API_TOKEN` — a token with the **Cloudflare Pages: Edit** permission
-- `CLOUDFLARE_ACCOUNT_ID` — from the Cloudflare dashboard sidebar
-
-Until they are set, the deploy step is skipped and the build still reports green.
-
-Alternatively, connect the repo directly in the Cloudflare dashboard
-(Workers & Pages → Create → Pages → Connect to Git) with:
-
-- Build command: `npm run build`
-- Build output directory: `dist`
-
-If you use the dashboard integration, delete `.github/workflows/deploy.yml` so
-both systems aren't deploying the same commit.
