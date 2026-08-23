@@ -6,9 +6,9 @@ on:
   pull_request:
   workflow_dispatch:
 
-# Build and typecheck only. Deployment belongs to the Cloudflare Pages Git
-# integration, which builds this repo itself — having both deploy would race
-# and produce a duplicate deployment on every push.
+# Build and typecheck only. Deployment belongs to Workers Builds, the dashboard
+# Git integration that runs `npx wrangler deploy` on this repo itself — having
+# both deploy would race and produce a duplicate deployment on every push.
 jobs:
   build:
     runs-on: ubuntu-latest

@@ -1,3 +1,20 @@
 name = "elsabr-website"
 compatibility_date = "2026-08-22"
-pages_build_output_dir = "dist"
+
+# An assets-only Worker: there is no Worker script, just the Vite build output.
+# `wrangler deploy` requires either a `main` entry-point or this block and
+# previously had neither — `pages_build_output_dir` means something only to
+# `wrangler pages deploy`, so the Workers deploy path saw no target at all.
+[assets]
+directory = "./dist"
+# Serve index.html for paths that match no file, so a cold load of /catalog is
+# handled by React Router. This replaces the Pages-style `/* /index.html 200`
+# rewrite in public/_redirects: Workers honours _redirects but not its 200
+# rewrite form, so the rewrite has to live here.
+not_found_handling = "single-page-application"
+
+# Cloudflare's build settings carry no build command, which is why dist/ did not
+# exist at deploy time. Wrangler runs this before uploading, so a deploy builds
+# what it ships whether or not the dashboard field is ever filled in.
+[build]
+command = "npm run build"

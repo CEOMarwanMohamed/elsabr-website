@@ -1,7 +1,7 @@
 # الصبر — موقع الشركة
 
 Marketing site and product catalog for **الصبر لتوريد مستلزمات الشركات**, built
-with React + Vite and deployed to Cloudflare Pages.
+with React + Vite and deployed to Cloudflare Workers.
 
 Imported from the Claude Design project *Paper products supplier website*
 (`الصبر - الصفحة الرئيسية.dc.html` and `الكتالوج.dc.html`).
@@ -11,7 +11,7 @@ Imported from the Claude Design project *Paper products supplier website*
 - **React 19** + **TypeScript**, bundled by **Vite 7**
 - **React Router** for routing
 - **CSS Modules** for component styles, with design tokens in `src/styles/global.css`
-- **Cloudflare Pages** for hosting
+- **Cloudflare Workers** static assets for hosting
 
 ## Local development
 
@@ -26,7 +26,6 @@ npm run preview    # serve the production build locally
 
 ```
 public/assets/        brand marks + client logos
-public/_redirects     SPA fallback for Cloudflare Pages
 public/_headers       cache + security headers
 src/data/site.ts      home page copy and contact details
 src/data/catalog.ts   the 36 catalog products (generated from the design)
@@ -80,35 +79,47 @@ never stranded.
   design, `cat-cp1` and `cat-cp2` are the same image.)
 - **The home page quote form has no backend.** It validates input and then hands
   the request to the visitor's mail client via `mailto:`. Replace `sendQuote()`
-  in `src/components/QuoteForm.tsx` with a real endpoint (a Cloudflare Pages
-  Function at `functions/api/quote.ts`, or a form service).
+  in `src/components/QuoteForm.tsx` with a real endpoint (a Cloudflare
+  Worker route, or a form service).
 - **Placeholder contact details.** `src/data/site.ts` carries the design's dummy
   phone (`0100 000 0000`), WhatsApp number, and email (`sales@example.com`).
   The design's home page had an invalid `tel:+2001000000000`; the valid form
   from the catalog page is used throughout.
 
-## Deploying to Cloudflare Pages
+## Deploying to Cloudflare Workers
 
-Deployment is handled by the **Cloudflare Pages Git integration**, which builds
-this repo itself on every push to `main`. Its build settings live in the
-dashboard (Workers & Pages → elsabr-website → Settings → Build) and must be:
+The site is an **assets-only Worker**: no Worker script, just the Vite build
+output served as static assets. `wrangler.toml` carries both halves of that:
 
-- Build command: `npm run build`
-- Deploy command: `npx wrangler pages deploy dist`
-- Build output directory: `dist`
+```toml
+[assets]
+directory = "./dist"
+not_found_handling = "single-page-application"
 
-Both of the first two matter. An empty build command leaves no `dist/` for the
-deploy step to upload, and the deploy command has to be `wrangler pages deploy`:
-plain `wrangler deploy` is the Workers command, and on a Pages project it looks
-for a `main` entry-point or an `[assets]` block, finds `pages_build_output_dir`
-instead, and fails. `--project-name` is unnecessary because `name` is already
-set in `wrangler.toml`.
+[build]
+command = "npm run build"
+```
 
-`.github/workflows/ci.yml` builds on every push and pull request but does **not**
-deploy, so the two systems cannot race over the same commit. If you ever move
-deployment back to GitHub Actions, disconnect the Git integration first and add
-`CLOUDFLARE_API_TOKEN` (needs **Cloudflare Pages: Edit**) and
-`CLOUDFLARE_ACCOUNT_ID` as repository secrets.
+`[assets]` is what makes `wrangler deploy` work — without it, and without a
+`main` entry-point, wrangler has nothing to upload and fails with *Missing
+entry-point to Worker script or to assets directory*. A `pages_build_output_dir`
+key does **not** substitute for it: that key means something only to
+`wrangler pages deploy`, which is a different code path.
+
+`[build]` runs before the upload, so a deploy always builds what it ships. This
+is deliberate: Cloudflare's dashboard build-command field can be left empty and
+the deploy still works.
+
+`not_found_handling` serves `index.html` for unmatched paths so a cold load of
+`/catalog` reaches React Router. It replaces the Pages-style `/* /index.html 200`
+rule that used to live in `public/_redirects` — Workers reads `_redirects` but
+not its 200-rewrite form, so that file is gone. `public/_headers` is natively
+supported and stays.
+
+Deployment runs on every push to `main` via **Workers Builds** (the dashboard's
+Git integration), whose deploy command is `npx wrangler deploy`.
+`.github/workflows/ci.yml` builds and typechecks but deliberately does not
+deploy, so the two cannot race over the same commit.
 
 ### One-off deploy from your machine
 
