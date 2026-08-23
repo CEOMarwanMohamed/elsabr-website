@@ -48,7 +48,9 @@
 .track {
   display: flex;
   width: max-content;
-  gap: 20px;
+  /* No gap here or on .group: the loop translates by -50%, which only lands
+     group two exactly where group one started when the two groups abut with
+     nothing between them. Slot padding carries the spacing instead. */
   animation: sabr-marquee 38s linear infinite;
 }
 
@@ -58,21 +60,29 @@
 
 .group {
   display: flex;
-  gap: 20px;
   align-items: center;
 }
 
 .slot {
-  width: 200px;
-  height: 88px;
-  border: 1px dashed var(--border-strong);
-  background: var(--bg);
+  /* No card — the logos float on the section ground. The slot shrinks to its
+     logo so the padding, not a fixed box, sets the rhythm: every pair of
+     neighbours ends up the same distance apart whatever shape they are. */
+  height: 104px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13.5px;
-  color: var(--text-ghost);
+  padding: 8px 36px;
   flex-shrink: 0;
+}
+
+.logo {
+  /* Capped both ways so a 4:1 wordmark and a square badge carry similar
+     optical weight instead of the wide one running away with the row. */
+  max-width: 190px;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
 }
 
 @media (prefers-reduced-motion: reduce) {
