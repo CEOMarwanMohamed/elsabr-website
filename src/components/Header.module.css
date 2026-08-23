@@ -4,7 +4,7 @@
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 14px 24px;
-  padding: 22px var(--gutter);
+  padding: 16px var(--gutter);
   border-bottom: 1px solid var(--border);
   position: sticky;
   top: 0;
@@ -21,7 +21,9 @@
 }
 
 .logo {
-  height: 52px;
+  /* Taller than the old wordmark: this mark is near-square, so it needs the
+     height to stay legible. Padding drops to keep the header bar the same. */
+  height: 64px;
   width: auto;
   display: block;
 }
@@ -92,10 +94,10 @@
 
 @media (max-width: 900px) {
   .header {
-    padding: 16px var(--gutter);
+    padding: 12px var(--gutter);
   }
   .logo {
-    height: 42px;
+    height: 50px;
   }
   .tagline {
     display: none;

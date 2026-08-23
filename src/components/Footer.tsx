@@ -10,8 +10,8 @@ export function Footer() {
             src="/assets/elsabr-logo-light.png"
             alt={site.name}
             className={styles.logo}
-            width={225}
-            height={64}
+            width={683}
+            height={760}
           />
           <p className={styles.blurb}>
             مورّد مستلزمات المكاتب والتشغيل للشركات والجهات في مصر.

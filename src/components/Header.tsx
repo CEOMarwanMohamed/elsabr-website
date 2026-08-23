@@ -25,8 +25,8 @@ export function Header() {
             src="/assets/elsabr-logo.png"
             alt={site.name}
             className={styles.logo}
-            width={183}
-            height={52}
+            width={683}
+            height={760}
           />
         </Link>
         <span className={styles.tagline}>{site.tagline}</span>
