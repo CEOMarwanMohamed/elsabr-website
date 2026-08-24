@@ -1,11 +1,11 @@
 export const site = {
   name: 'الصبر',
   tagline: 'لتوريد مستلزمات الشركات',
-  phoneDisplay: '0100 000 0000',
-  // The design's home page wrote tel:+2001000000000 (an extra 0); the catalog
-  // page had the correct form. Standardised on the valid Egyptian number.
-  phoneHref: 'tel:+201000000000',
-  whatsapp: '201000000000',
+  phoneDisplay: '0102 547 1076',
+  phoneHref: 'tel:+201025471076',
+  // Click-to-chat wants international format, digits only — no '+', spaces or
+  // separators. isWhatsappConfigured() in cart/order.ts enforces that shape.
+  whatsapp: '201025471076',
   email: 'sales@example.com',
   city: 'القاهرة',
   serviceAreas: 'القاهرة، الجيزة، 6 أكتوبر، العبور',

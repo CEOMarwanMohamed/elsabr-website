@@ -100,40 +100,6 @@
   letter-spacing: 1px;
 }
 
-.stepper {
-  display: flex;
-  align-items: center;
-  border: 1px solid var(--border-strong);
-  background: var(--surface);
-}
-
-.step {
-  width: 36px;
-  height: 34px;
-  background: none;
-  border: none;
-  font-size: 17px;
-  color: var(--ink);
-  cursor: pointer;
-  line-height: 1;
-}
-
-.step:hover {
-  background: var(--bg);
-}
-
-.stepValue {
-  width: 48px;
-  height: 34px;
-  line-height: 34px;
-  text-align: center;
-  font-family: var(--font-display);
-  font-size: 15.5px;
-  border-right: 1px solid var(--bg-alt);
-  border-left: 1px solid var(--bg-alt);
-  font-variant-numeric: tabular-nums;
-}
-
 .addWrap {
   margin-top: auto;
 }
@@ -156,4 +122,26 @@
 
 .added {
   background: var(--green);
+}
+
+/* Secondary enquiry link, only on تحت الطلب cards. Quieter than .add so the
+   cart stays the primary action. */
+.ask {
+  display: block;
+  width: 100%;
+  padding: 11px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-nav);
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+  transition:
+    background 0.18s ease,
+    color 0.18s ease;
+}
+
+.ask:hover {
+  background: var(--bg-alt);
+  color: var(--green);
 }

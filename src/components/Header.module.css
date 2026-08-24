@@ -115,3 +115,30 @@
   font-weight: 500;
   white-space: nowrap;
 }
+
+/* Phones: strip the header down to a centered logo over the nav links. The
+   phone, cart, and quote buttons all have reachable equivalents further down
+   (the cart gets its floating button once it has something in it), so the bar
+   itself stays uncluttered at this width. */
+@media (max-width: 640px) {
+  .header {
+    justify-content: center;
+    gap: 10px;
+  }
+  .brand {
+    width: 100%;
+    justify-content: center;
+  }
+  .actions {
+    display: none;
+  }
+  .nav {
+    justify-content: center;
+    gap: 10px 16px;
+  }
+  /* Not a link, and it wraps onto a row of its own here; the catalog page
+     already names itself in the eyebrow just below the bar. */
+  .current {
+    display: none;
+  }
+}

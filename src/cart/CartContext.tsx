@@ -12,7 +12,8 @@ import type { Product } from '../data/catalog';
 
 /** Same key the design canvas used, so an existing cart carries over. */
 const STORAGE_KEY = 'sabr-cart-v1';
-const MAX_QTY = 999;
+/** Shared with ProductCard so the two steppers cannot drift apart. */
+export const MAX_QTY = 999;
 
 export interface CartLine {
   code: string;

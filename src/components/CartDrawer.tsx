@@ -1,11 +1,16 @@
 import { useEffect, useRef, useState } from 'react';
 import { useCart } from '../cart/CartContext';
-import { buildOrderMessage, whatsappUrl } from '../cart/order';
+import { MAX_NOTES_LENGTH, whatsappOrderUrl } from '../cart/order';
 import { site } from '../data/site';
+import { QtyStepper } from './QtyStepper';
 import styles from './CartDrawer.module.css';
 
 export function CartDrawer() {
   const { lines, lineCount, unitCount, isOpen, close, setQty, remove, clear } = useCart();
+  // Kept in component state rather than localStorage: it is the customer's own
+  // details, and the cart is the only thing worth restoring on a refresh.
+  const [company, setCompany] = useState('');
+  const [location, setLocation] = useState('');
   const [notes, setNotes] = useState('');
   const panelRef = useRef<HTMLElement | null>(null);
   const closeRef = useRef<HTMLButtonElement | null>(null);
@@ -31,7 +36,7 @@ export function CartDrawer() {
     };
   }, [isOpen]);
 
-  const href = lineCount ? whatsappUrl(buildOrderMessage(lines, notes)) : undefined;
+  const href = whatsappOrderUrl(lines, { company, location, notes });
 
   return (
     <>
@@ -104,53 +109,83 @@ export function CartDrawer() {
 
                   <div className={styles.rowQty}>
                     <span className={styles.rowQtyLabel}>الكمية</span>
-                    <div className={styles.stepper}>
-                      <button
-                        type="button"
-                        className={styles.step}
-                        onClick={() => setQty(line.code, line.qty - 1)}
-                        aria-label="أقل"
-                      >
-                        −
-                      </button>
-                      <span className={styles.stepValue}>{line.qty}</span>
-                      <button
-                        type="button"
-                        className={styles.step}
-                        onClick={() => setQty(line.code, line.qty + 1)}
-                        aria-label="أكثر"
-                      >
-                        +
-                      </button>
-                    </div>
+                    {/* Dropping to zero removes the line, as the ✕ does. */}
+                    <QtyStepper
+                      value={line.qty}
+                      onChange={(n) => setQty(line.code, n)}
+                      label={line.name}
+                      compact
+                    />
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {/* The form scrolls with the items so the pinned footer stays a
+              single button — three inputs there squeezed the list on a phone.
+              Deliberately short: two fields that actually speed up a quote. We
+              do not ask for a phone number — the order arrives from the
+              customer's own WhatsApp, so we already have it. */}
+          {lineCount > 0 && (
+            <div className={styles.fields}>
+              <label className={styles.fieldLabel}>
+                اسم الشركة (اختياري)
+                <input
+                  className={styles.field}
+                  type="text"
+                  maxLength={80}
+                  placeholder="الشركة أو الجهة"
+                  value={company}
+                  onChange={(e) => setCompany(e.target.value)}
+                />
+              </label>
+
+              <label className={styles.fieldLabel}>
+                مكان التسليم (اختياري)
+                <input
+                  className={styles.field}
+                  type="text"
+                  maxLength={80}
+                  placeholder="المنطقة أو عنوان الفرع"
+                  value={location}
+                  onChange={(e) => setLocation(e.target.value)}
+                />
+              </label>
+
+              <label className={styles.fieldLabel}>
+                ملاحظات على الطلب (اختياري)
+                <textarea
+                  className={styles.notes}
+                  rows={2}
+                  maxLength={MAX_NOTES_LENGTH}
+                  placeholder="موعد التوريد، أي تفاصيل تانية"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                />
+              </label>
             </div>
           )}
         </div>
 
         {lineCount > 0 && (
           <div className={styles.foot}>
-            <label className={styles.notesLabel}>
-              ملاحظات على الطلب (اختياري)
-              <textarea
-                className={styles.notes}
-                rows={2}
-                placeholder="موعد التوريد، عنوان الفرع، أي تفاصيل"
-                value={notes}
-                onChange={(e) => setNotes(e.target.value)}
-              />
-            </label>
-
-            <a
-              className={styles.send}
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              ابعت الطلب على واتساب
-            </a>
+            {href ? (
+              <a
+                className={styles.send}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                ابعت الطلب على واتساب
+              </a>
+            ) : (
+              // Only when the WhatsApp number is missing or malformed: keep a
+              // working path instead of a dead link.
+              <a className={styles.send} href={site.phoneHref}>
+                اتصل بينا عشان نستلم الطلب
+              </a>
+            )}
 
             <div className={styles.footRow}>
               <a href={site.phoneHref} className={styles.footCall}>

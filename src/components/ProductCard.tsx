@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from 'react';
-import { useCart } from '../cart/CartContext';
+import { MAX_QTY, useCart } from '../cart/CartContext';
+import { whatsappProductUrl } from '../cart/order';
 import type { Product } from '../data/catalog';
+import { QtyStepper } from './QtyStepper';
 import styles from './ProductCard.module.css';
-
-const MAX_QTY = 999;
 
 export function ProductCard({ product }: { product: Product }) {
   const { add } = useCart();
@@ -16,7 +16,8 @@ export function ProductCard({ product }: { product: Product }) {
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
-  const bump = (d: number) => setQty((q) => Math.max(1, Math.min(MAX_QTY, q + d)));
+  // Carries the quantity the customer dialled in, so the enquiry matches it.
+  const askHref = product.inStock ? null : whatsappProductUrl(product, qty);
 
   const onAdd = () => {
     add(product, qty);
@@ -72,25 +73,11 @@ export function ProductCard({ product }: { product: Product }) {
 
         <div className={styles.qtyRow}>
           <span className={styles.qtyLabel}>الكمية المطلوبة</span>
-          <div className={styles.stepper}>
-            <button
-              type="button"
-              className={styles.step}
-              onClick={() => bump(-1)}
-              aria-label={`أقل — ${product.name}`}
-            >
-              −
-            </button>
-            <span className={styles.stepValue}>{qty}</span>
-            <button
-              type="button"
-              className={styles.step}
-              onClick={() => bump(1)}
-              aria-label={`أكثر — ${product.name}`}
-            >
-              +
-            </button>
-          </div>
+          <QtyStepper
+            value={qty}
+            onChange={(n) => setQty(Math.max(1, Math.min(MAX_QTY, n)))}
+            label={product.name}
+          />
         </div>
 
         <div className={styles.addWrap}>
@@ -101,6 +88,20 @@ export function ProductCard({ product }: { product: Product }) {
           >
             {justAdded ? 'تمّت الإضافة ✓' : 'أضف للسلة'}
           </button>
+
+          {/* Only on تحت الطلب items: asking is the useful action there. On
+              stocked items a second WhatsApp button would just compete with
+              the cart and split orders into one-off chats. */}
+          {!product.inStock && askHref && (
+            <a
+              className={styles.ask}
+              href={askHref}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              اسأل عنه على واتساب
+            </a>
+          )}
         </div>
       </div>
     </article>

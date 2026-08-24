@@ -1,0 +1,59 @@
+/* Shared by the catalogue card and the cart drawer. The two differed by about
+   two pixels before they were merged; .compact keeps the drawer's tighter size. */
+.stepper {
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border-strong);
+  background: var(--surface);
+}
+
+.stepper:focus-within {
+  border-color: var(--green);
+}
+
+.step {
+  width: 36px;
+  height: 34px;
+  background: none;
+  border: none;
+  font-size: 17px;
+  color: var(--ink);
+  cursor: pointer;
+  line-height: 1;
+}
+
+.step:hover {
+  background: var(--bg);
+}
+
+.value {
+  width: 48px;
+  height: 34px;
+  padding: 0;
+  text-align: center;
+  font-family: var(--font-display);
+  font-size: 15.5px;
+  color: var(--ink);
+  background: none;
+  border: none;
+  border-right: 1px solid var(--bg-alt);
+  border-left: 1px solid var(--bg-alt);
+  font-variant-numeric: tabular-nums;
+}
+
+.value:focus {
+  outline: none;
+  background: var(--bg);
+}
+
+.compact .step {
+  width: 34px;
+  height: 32px;
+  font-size: 16px;
+}
+
+.compact .value {
+  width: 46px;
+  height: 32px;
+  font-size: 15px;
+}

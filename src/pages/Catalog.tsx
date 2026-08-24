@@ -1,10 +1,9 @@
 import { useEffect, useMemo, useState } from 'react';
+import { whatsappChatUrl } from '../cart/order';
 import { ProductCard } from '../components/ProductCard';
 import { catalog } from '../data/catalog';
 import { site } from '../data/site';
 import styles from './Catalog.module.css';
-
-type Sort = 'none' | 'asc' | 'desc';
 
 function initialTab(): string {
   const hash = window.location.hash.replace('#', '');
@@ -12,9 +11,9 @@ function initialTab(): string {
 }
 
 export default function Catalog() {
+  const whatsapp = whatsappChatUrl();
   const [tab, setTab] = useState(initialTab);
   const [onlyStock, setOnlyStock] = useState(false);
-  const [sort, setSort] = useState<Sort>('none');
 
   // Keep the hash in step with the active tab, as the design did.
   useEffect(() => {
@@ -39,15 +38,13 @@ export default function Catalog() {
 
   const section = catalog.find((s) => s.id === tab) ?? catalog[0];
 
-  const products = useMemo(() => {
-    const shown = onlyStock
-      ? section.products.filter((p) => p.inStock)
-      : section.products;
-    if (sort === 'none') return shown;
-    return [...shown].sort((a, b) =>
-      sort === 'asc' ? a.price - b.price : b.price - a.price,
-    );
-  }, [section, onlyStock, sort]);
+  // No price sort: prices are never shown, and the ones in the catalogue data
+  // are demo values — sorting by an invisible placeholder misleads more than
+  // it helps. Bring it back when real prices are on the cards.
+  const products = useMemo(
+    () => (onlyStock ? section.products.filter((p) => p.inStock) : section.products),
+    [section, onlyStock],
+  );
 
   return (
     <>
@@ -94,18 +91,6 @@ export default function Catalog() {
               />
               المتوفر حالاً بس
             </label>
-            <label className={styles.sort}>
-              السعر
-              <select
-                className={styles.select}
-                value={sort}
-                onChange={(e) => setSort(e.target.value as Sort)}
-              >
-                <option value="none">الترتيب الافتراضي</option>
-                <option value="asc">من الأقل للأعلى</option>
-                <option value="desc">من الأعلى للأقل</option>
-              </select>
-            </label>
           </div>
         </div>
       </div>
@@ -140,14 +125,16 @@ export default function Catalog() {
             </p>
           </div>
           <div className={styles.ctaActions}>
-            <a
-              className={styles.ctaPrimary}
-              href={`https://wa.me/${site.whatsapp}`}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              واتساب
-            </a>
+            {whatsapp && (
+              <a
+                className={styles.ctaPrimary}
+                href={whatsapp}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                واتساب
+              </a>
+            )}
             <a className={styles.ctaSecondary} href={site.phoneHref}>
               اتصل بينا
             </a>

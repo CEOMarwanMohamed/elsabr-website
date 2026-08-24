@@ -119,25 +119,6 @@
   cursor: pointer;
 }
 
-.sort {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 14.5px;
-  color: var(--text-nav);
-  white-space: nowrap;
-}
-
-.select {
-  font-size: 14.5px;
-  padding: 8px 10px;
-  border: 1px solid var(--border-strong);
-  background: var(--surface);
-  color: var(--ink);
-  border-radius: var(--radius);
-  cursor: pointer;
-}
-
 .section {
   max-width: var(--page-max);
   margin: 0 auto;
