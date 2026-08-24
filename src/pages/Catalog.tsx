@@ -120,7 +120,7 @@ export default function Catalog() {
           <div style={{ maxWidth: 640 }}>
             <h2 className={styles.ctaTitle}>كميتك أكبر من الشريحة الأخيرة؟</h2>
             <p className={styles.ctaBody}>
-              كلمنا وهنعملك سعر خاص مكتوب، ثابت 30 يوم، مع مندوب واحد يتابع معاك كل
+              كلمنا وهنعملك سعر خاص مكتوب، ثابت 30 يوم، مع متخصص واحد يتابع معاك كل
               الأقسام.
             </p>
           </div>
