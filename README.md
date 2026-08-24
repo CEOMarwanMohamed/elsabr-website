@@ -81,10 +81,10 @@ never stranded.
   the request to the visitor's mail client via `mailto:`. Replace `sendQuote()`
   in `src/components/QuoteForm.tsx` with a real endpoint (a Cloudflare
   Worker route, or a form service).
-- **Placeholder contact details.** `src/data/site.ts` carries the design's dummy
-  phone (`0100 000 0000`), WhatsApp number, and email (`sales@example.com`).
-  The design's home page had an invalid `tel:+2001000000000`; the valid form
-  from the catalog page is used throughout.
+- **Placeholder email.** `src/data/site.ts` carries the real phone and WhatsApp
+  number (`0103 288 2388`), but the email is still the design's dummy
+  (`sales@example.com`). The design's home page had an invalid
+  `tel:+2001000000000`; the valid form from the catalog page is used throughout.
 
 ## Deploying to Cloudflare Workers
 

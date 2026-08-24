@@ -1,11 +1,11 @@
 export const site = {
   name: 'الصبر',
   tagline: 'لتوريد مستلزمات الشركات',
-  phoneDisplay: '0102 547 1076',
-  phoneHref: 'tel:+201025471076',
+  phoneDisplay: '0103 288 2388',
+  phoneHref: 'tel:+201032882388',
   // Click-to-chat wants international format, digits only — no '+', spaces or
   // separators. isWhatsappConfigured() in cart/order.ts enforces that shape.
-  whatsapp: '201025471076',
+  whatsapp: '201032882388',
   email: 'sales@example.com',
   city: 'القاهرة',
   serviceAreas: 'القاهرة، الجيزة، 6 أكتوبر، العبور',
