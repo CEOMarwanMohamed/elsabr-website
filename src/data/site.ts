@@ -6,7 +6,7 @@ export const site = {
   // Click-to-chat wants international format, digits only — no '+', spaces or
   // separators. isWhatsappConfigured() in cart/order.ts enforces that shape.
   whatsapp: '201032882388',
-  email: 'sales@example.com',
+  email: 'mazinbakr@hotmail.com',
   city: 'القاهرة',
   serviceAreas: 'القاهرة، الجيزة، 6 أكتوبر، العبور',
   hours: { from: '9 ص', to: '6 م' },
