@@ -40,7 +40,7 @@ export function ProductCard({ product }: { product: Product }) {
             alt={product.imageAlt ?? product.name}
             loading="lazy"
             width={320}
-            height={168}
+            height={190}
             onError={() => setImageOk(false)}
           />
         ) : (

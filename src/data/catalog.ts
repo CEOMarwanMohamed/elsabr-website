@@ -38,9 +38,8 @@ export const catalog: CatalogSection[] = [
         price: 1180,
         inStock: true,
         availability: "متوفر",
-        // design asset: assets/cat-cp1.webp
-        image: null,
-        imageAlt: "صورة ورق A4 80 جرام",
+        image: "/assets/paper-multi-office-a4-80.jpg",
+        imageAlt: "كرتونة ورق Multi Office مقاس A4 وزن 80 جرام",
       },
       {
         code: "SBR-CP-A470",
@@ -50,9 +49,8 @@ export const catalog: CatalogSection[] = [
         price: 1040,
         inStock: true,
         availability: "متوفر",
-        // design asset: assets/cat-cp2.webp
-        image: null,
-        imageAlt: "صورة ورق A4 70 جرام",
+        image: "/assets/paper-multi-office-a3-80.jpg",
+        imageAlt: "كرتونة ورق Multi Office مقاس A3 وزن 80 جرام",
       },
       {
         code: "SBR-CP-A380",
@@ -62,9 +60,8 @@ export const catalog: CatalogSection[] = [
         price: 2290,
         inStock: true,
         availability: "متوفر",
-        // design asset: assets/cat-cp3.webp
-        image: null,
-        imageAlt: "صورة ورق A3",
+        image: "/assets/paper-chamex-80.jpg",
+        imageAlt: "كرتونة ورق شيمكس وزن 80 جرام",
       },
       {
         code: "SBR-CP-A4CL",
@@ -74,9 +71,8 @@ export const catalog: CatalogSection[] = [
         price: 165,
         inStock: true,
         availability: "متوفر",
-        // design asset: assets/cat-cp4.webp
-        image: null,
-        imageAlt: "صورة ورق ملون",
+        image: "/assets/paper-omnia-80.jpg",
+        imageAlt: "كرتونة ورق أمنية وزن 80 جرام",
       },
       {
         code: "SBR-CP-A580",
@@ -86,9 +82,8 @@ export const catalog: CatalogSection[] = [
         price: 1320,
         inStock: true,
         availability: "متوفر",
-        // design asset: assets/cat-cp5.webp
-        image: null,
-        imageAlt: "صورة ورق A5",
+        image: "/assets/paper-azhar-70.jpg",
+        imageAlt: "رزمة ورق أزهار وزن 70 جرام",
       },
       {
         code: "SBR-CP-A4100",
@@ -98,9 +93,8 @@ export const catalog: CatalogSection[] = [
         price: 320,
         inStock: false,
         availability: "تحت الطلب",
-        // design asset: assets/cat-cp6.webp
-        image: null,
-        imageAlt: "صورة ورق 100 جرام",
+        image: "/assets/paper-maram-70.jpg",
+        imageAlt: "رزم ورق مرام وزن 70 جرام",
       },
     ],
   },

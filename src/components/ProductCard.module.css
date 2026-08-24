@@ -6,20 +6,27 @@
 }
 
 .media {
-  height: 168px;
-  background: var(--bg);
+  height: 190px;
+  background: #fff;
   border-bottom: 1px solid #e0e0e0;
 }
 
+/* Product shots are vendor photos of a box or ream on white, in mixed
+   portrait and landscape ratios. `contain` keeps the whole pack — and its
+   branding — visible; `cover` cropped straight through the label. The white
+   backdrop matches the photos' own, so the letterboxing doesn't read as one. */
 .media img {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  padding: 10px;
   display: block;
 }
 
-/* Products without a photo get a quiet monogram block rather than a gap. */
+/* Products without a photo get a quiet monogram block rather than a gap. It
+   keeps the tinted backdrop; only the photo slot went white. */
 .mediaEmpty {
+  background: var(--bg);
   display: flex;
   align-items: center;
   justify-content: center;
