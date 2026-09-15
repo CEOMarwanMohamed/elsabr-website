@@ -1,4 +1,4 @@
-import type { Product } from '../data/catalog';
+import type { Product, ProductVariant } from '../data/catalog';
 import { site } from '../data/site';
 import type { CartLine } from './CartContext';
 
@@ -57,12 +57,14 @@ function formatLine(line: CartLine, index: number, detail: OrderDetail): string 
   }
 
   if (detail === 'short') {
-    const parts = [`${no}${line.name} — ${line.qty}`];
+    const name = line.size ? `${line.name} (${line.size})` : line.name;
+    const parts = [`${no}${name} — ${line.qty}`];
     if (line.code) parts.push(` — ${line.code}`);
     return parts.join('');
   }
 
   const parts = [`${no}${line.name} — الكمية: ${line.qty}`];
+  if (line.size) parts.push(` — مقاس ${line.size}`);
   if (line.unit) parts.push(` × ${line.unit}`);
   if (line.code) parts.push(` — كود ${line.code}`);
   return parts.join('');
@@ -164,12 +166,18 @@ export function whatsappOrderUrl(
 }
 
 /** Single-product enquiry. Same mechanism as the cart, one item. */
-export function whatsappProductUrl(product: Product, qty = 1): string | null {
+export function whatsappProductUrl(
+  product: Product,
+  qty = 1,
+  variant?: ProductVariant,
+): string | null {
+  const size = variant?.size ?? product.size;
   const message = [
     'السلام عليكم، حابب أسأل عن الصنف ده:',
     '',
     product.name,
-    `الكود: ${product.code}`,
+    `الكود: ${variant?.code ?? product.code}`,
+    size ? `المقاس: ${size}` : '',
     product.unit ? `الوحدة: ${product.unit}` : '',
     `الكمية المطلوبة: ${qty}`,
     '',

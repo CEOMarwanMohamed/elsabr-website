@@ -13,14 +13,24 @@ export function ProductCard({ product }: { product: Product }) {
   // showing a broken image. Restoring the files makes photos appear again.
   const [imageOk, setImageOk] = useState(true);
   const timer = useRef<number | undefined>(undefined);
+  // Multi-size products start on their first size, so there is always a
+  // concrete selection — no empty state to guard against on add.
+  const [variantIdx, setVariantIdx] = useState(0);
 
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
+  const variants = product.variants;
+  const variant = variants?.[variantIdx];
+  const code = variant?.code ?? product.code;
+  const size = variant?.size ?? product.size;
+
   // Carries the quantity the customer dialled in, so the enquiry matches it.
-  const askHref = product.inStock ? null : whatsappProductUrl(product, qty);
+  const askHref = product.inStock
+    ? null
+    : whatsappProductUrl(product, qty, variant);
 
   const onAdd = () => {
-    add(product, qty);
+    add(product, qty, variant);
     setQty(1);
     setJustAdded(true);
     window.clearTimeout(timer.current);
@@ -63,10 +73,29 @@ export function ProductCard({ product }: { product: Product }) {
         <dl className={styles.meta}>
           <dt className={styles.metaKey}>الكود</dt>
           <dd className={styles.metaVal}>
-            <bdi>{product.code}</bdi>
+            <bdi>{code}</bdi>
           </dd>
-          <dt className={styles.metaKey}>المقاس</dt>
-          <dd className={styles.metaVal}>{product.size}</dd>
+          <dt className={styles.metaKey}>
+            <label htmlFor={`size-${product.code}`}>المقاس</label>
+          </dt>
+          <dd className={styles.metaVal}>
+            {variants ? (
+              <select
+                id={`size-${product.code}`}
+                className={styles.size}
+                value={variantIdx}
+                onChange={(e) => setVariantIdx(Number(e.target.value))}
+              >
+                {variants.map((v, i) => (
+                  <option key={v.code} value={i}>
+                    {v.size}
+                  </option>
+                ))}
+              </select>
+            ) : (
+              size
+            )}
+          </dd>
           <dt className={styles.metaKey}>الوحدة</dt>
           <dd className={styles.metaVal}>{product.unit}</dd>
         </dl>

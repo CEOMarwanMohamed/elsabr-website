@@ -104,6 +104,7 @@ export function CartDrawer() {
 
                   <div className={styles.rowMeta}>
                     {line.code && <bdi>{line.code}</bdi>}
+                    {line.size && <span>{line.size}</span>}
                     {line.unit && <span>{line.unit}</span>}
                   </div>
 

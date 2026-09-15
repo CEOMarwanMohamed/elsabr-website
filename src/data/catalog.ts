@@ -3,10 +3,25 @@
 
 export type Availability = 'متوفر' | 'تحت الطلب';
 
+/**
+ * One orderable size of a product that comes in several.
+ *
+ * Each variant carries its own full SKU code rather than a suffix composed at
+ * runtime, for two reasons: the cart keys lines by code, so distinct codes keep
+ * A4 and A3 of the same product as separate lines for free; and the order
+ * message degrades to code-only under the URL budget (see order.ts), where the
+ * code is the only thing left to say which size was ordered.
+ */
+export interface ProductVariant {
+  code: string;
+  size: string;
+}
+
 export interface Product {
-  /** Stable id used as the cart key. */
+  /** Stable id used as the cart key. Variant products key by variant code. */
   code: string;
   name: string;
+  /** Ignored when `variants` is set — the chosen variant supplies the size. */
   size: string;
   unit: string;
   /** Used for sorting only — not shown, and never sent with the order. */
@@ -15,6 +30,8 @@ export interface Product {
   availability: Availability;
   image: string | null;
   imageAlt: string | null;
+  /** Set when the product is sold in several sizes. The card shows a picker. */
+  variants?: ProductVariant[];
 }
 
 export interface CatalogSection {

@@ -37,6 +37,43 @@ const product: Product = {
   imageAlt: null,
 };
 
+describe('multi-size products', () => {
+  const a4 = line({ code: 'SBR-FL-BND-A4', name: 'تكعيب معتم وشفاف', size: 'A4' });
+  const a3 = line({ code: 'SBR-FL-BND-A3', name: 'تكعيب معتم وشفاف', size: 'A3' });
+
+  it('names the chosen size in the full form', () => {
+    expect(buildOrderMessage([a4])).toContain('مقاس A4');
+  });
+
+  it('keeps the size in the short form', () => {
+    expect(buildOrderMessage([a4], {}, 'short')).toContain('(A4)');
+  });
+
+  it('tells two sizes of one product apart at every detail level', () => {
+    // The point of per-variant codes: even the code-only form, which drops
+    // names and units entirely, still says which size was ordered.
+    for (const detail of ['full', 'short', 'code'] as const) {
+      const msg = buildOrderMessage([a4, a3], {}, detail);
+      expect(msg).toContain('SBR-FL-BND-A4');
+      expect(msg).toContain('SBR-FL-BND-A3');
+    }
+  });
+
+  it('leaves single-size lines untouched', () => {
+    expect(buildOrderMessage([line()])).not.toContain('مقاس');
+  });
+
+  it('puts the variant size and code in a product enquiry', () => {
+    const url = whatsappProductUrl(product, 2, {
+      code: 'SBR-FL-BND-A3',
+      size: 'A3',
+    });
+    const decoded = decodeURIComponent(url!.split('?text=')[1]);
+    expect(decoded).toContain('المقاس: A3');
+    expect(decoded).toContain('SBR-FL-BND-A3');
+  });
+});
+
 describe('buildOrderMessage', () => {
   it('lists a single product with quantity, unit and code', () => {
     const msg = buildOrderMessage([line()]);
