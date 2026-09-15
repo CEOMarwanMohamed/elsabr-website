@@ -59,10 +59,6 @@ export default function Catalog() {
           السعر بينزل كل ما الكمية تكبر، والشرايح مكتوبة جانب كل صنف. لو الكمية أكبر من
           الشريحة الأخيرة، كلمنا وهنعملك سعر خاص.
         </p>
-        <div className={styles.notice}>
-          <span className={styles.noticeDot} aria-hidden="true" />
-          الأصناف والأسعار المعروضة تجريبية للتصور، لحد ما تبعت بيانات المنتجات الحقيقية.
-        </div>
       </section>
 
       <div className={styles.controls}>

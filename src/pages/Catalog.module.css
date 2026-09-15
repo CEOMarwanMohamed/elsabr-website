@@ -22,26 +22,6 @@
   margin: 0 0 26px;
 }
 
-.notice {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  border: 1px solid var(--gold-border);
-  background: #fbf3dc;
-  border-radius: var(--radius);
-  padding: 10px 16px;
-  font-size: 14.5px;
-  color: var(--gold-dark);
-}
-
-.noticeDot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: var(--gold);
-  flex-shrink: 0;
-}
-
 .controls {
   position: sticky;
   top: 0;

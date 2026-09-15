@@ -9,7 +9,7 @@ export function Categories() {
         <div>
           <div className="eyebrow">أقسام التوريد</div>
           <h2 className={styles.title}>
-            تسع أقسام،
+            سبع أقسام،
             <br />
             ومورّد واحد.
           </h2>
