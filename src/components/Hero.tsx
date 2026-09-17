@@ -1,5 +1,5 @@
+import { Link } from 'react-router-dom';
 import { whatsappChatUrl } from '../cart/order';
-import { site } from '../data/site';
 import { CardStack } from './CardStack';
 import styles from './Hero.module.css';
 
@@ -25,10 +25,10 @@ export function Hero() {
           بنفضل معاك بعد ما الأوردر يوصل.
         </p>
 
-        {/* The hero's two actions are both direct contact: WhatsApp and a call.
-            Both numbers come from site.ts, so there is one place to change. */}
+        {/* The hero's two actions: a WhatsApp chat and the catalogue.
+            The WhatsApp number comes from site.ts, so there is one place to change. */}
         <div className={styles.ctaRow}>
-          {/* The call button stands alone if the number is not configured. */}
+          {/* The catalogue button stands alone if the number is not configured. */}
           {whatsapp && (
             <a
               href={whatsapp}
@@ -39,12 +39,12 @@ export function Hero() {
               كلمنا على واتساب
             </a>
           )}
-          <a
-            href={site.phoneHref}
+          <Link
+            to="/catalog"
             className={whatsapp ? styles.secondary : styles.primary}
           >
-            اتصل بينا
-          </a>
+            شوف الكتالوج
+          </Link>
         </div>
       </div>
 

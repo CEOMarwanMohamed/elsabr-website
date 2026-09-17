@@ -269,7 +269,7 @@ export const catalog: CatalogSection[] = [
       {
         code: "SBR-CL-AIR",
         name: "معطر جو فريدا أكوا سنسيشنز — كنزي",
-        size: "460 مل",
+        size: "250 مل",
         unit: "كرتونة — 12 عبوة",
         price: 390,
         inStock: true,
