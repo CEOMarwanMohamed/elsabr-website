@@ -1,0 +1,289 @@
+.picker {
+  position: relative;
+}
+
+/* Chosen items ------------------------------------------------------------ */
+
+.chosen {
+  list-style: none;
+  margin: 0 0 12px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 56px 1fr auto auto;
+  align-items: center;
+  gap: 12px;
+  padding: 8px;
+  border: 1px solid var(--border-faint);
+  background: var(--surface-muted);
+  border-radius: var(--radius);
+}
+
+.thumb {
+  width: 56px;
+  height: 56px;
+  background: #fff;
+  border: 1px solid var(--border-faint);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* Same reasoning as the catalogue cards: vendor shots are mixed ratios on
+   white, so contain keeps the whole pack visible instead of cropping it. */
+.thumbImg {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: 4px;
+  display: block;
+}
+
+.thumbEmpty {
+  font-family: var(--font-display);
+  font-size: 13px;
+  color: var(--border-strong);
+  user-select: none;
+}
+
+.rowText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.rowName {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--ink);
+  line-height: 1.4;
+}
+
+.rowMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  font-size: 12.5px;
+  color: var(--text-faint);
+}
+
+.remove {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  line-height: 1;
+  padding: 8px;
+  color: var(--text-ghost);
+  border-radius: var(--radius);
+}
+
+.remove:hover {
+  color: #b3261e;
+}
+
+/* The control ------------------------------------------------------------- */
+
+.toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 14px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface-muted);
+  border: 1px dashed var(--border-input);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+}
+
+.toggle:hover {
+  border-color: var(--green);
+  background: #fff;
+}
+
+.toggle[aria-invalid='true'] {
+  border-color: #b3261e;
+  border-style: solid;
+}
+
+.togglePlus {
+  font-size: 17px;
+  line-height: 1;
+  color: var(--green);
+}
+
+/* The panel --------------------------------------------------------------- */
+
+.panel {
+  position: absolute;
+  z-index: 20;
+  inset-inline: 0;
+  margin-top: 6px;
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  border-radius: var(--radius);
+  box-shadow: 0 18px 40px rgb(10 31 61 / 14%);
+  padding: 10px;
+}
+
+.search {
+  width: 100%;
+  padding: 11px 12px;
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--ink);
+  background: var(--surface-muted);
+  border: 1px solid var(--border-input);
+  border-radius: var(--radius);
+  outline: none;
+}
+
+.search:focus {
+  border-color: var(--green);
+}
+
+.count {
+  font-size: 12.5px;
+  color: var(--text-faint);
+  padding: 8px 2px 4px;
+}
+
+/* Capped so the panel never runs past the fold on a laptop; the list scrolls
+   inside it instead of the page jumping. */
+.list {
+  max-height: 320px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+.group {
+  position: sticky;
+  top: 0;
+  background: var(--surface);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--text-label);
+  padding: 8px 2px 6px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.option {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 4px;
+  border-bottom: 1px solid var(--border-faint);
+}
+
+.optionMain {
+  display: grid;
+  grid-template-columns: 56px 1fr;
+  align-items: center;
+  gap: 12px;
+  padding: 6px 2px;
+  background: none;
+  border: none;
+  font-family: inherit;
+  text-align: start;
+  cursor: pointer;
+  min-width: 0;
+}
+
+.optionMain:hover,
+.optionMain:focus-visible {
+  background: var(--surface-muted);
+}
+
+.pick {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--green);
+  white-space: nowrap;
+  font-family: inherit;
+  background: none;
+  border: 1px solid var(--green-border);
+  border-radius: var(--radius);
+  padding: 8px 14px;
+  cursor: pointer;
+}
+
+.pick:hover {
+  background: var(--green);
+  color: #fff;
+  border-color: var(--green);
+}
+
+.in {
+  color: var(--green);
+}
+
+.onOrder {
+  color: var(--gold-dark);
+}
+
+.error {
+  display: block;
+  font-size: 13px;
+  color: #b3261e;
+  margin-top: 8px;
+}
+
+@media (max-width: 900px) {
+  /* Drop the stepper onto a second line. Four columns inside a 22px-padded
+     card left the product name about 80px — two or three characters a line.
+     The children are fixed in source order: thumb, text, stepper, remove. */
+  .row {
+    grid-template-columns: 48px 1fr auto;
+    grid-template-areas:
+      'thumb text remove'
+      'thumb qty qty';
+    align-items: start;
+    row-gap: 8px;
+  }
+  .row > *:nth-child(1) {
+    grid-area: thumb;
+  }
+  .row > *:nth-child(2) {
+    grid-area: text;
+  }
+  .row > *:nth-child(3) {
+    grid-area: qty;
+    justify-self: start;
+  }
+  .row > *:nth-child(4) {
+    grid-area: remove;
+  }
+  .thumb {
+    width: 48px;
+    height: 48px;
+  }
+  /* Same reason as the chosen rows: the stepper needs its own line before the
+     product name is squeezed to nothing. */
+  .option {
+    grid-template-columns: 1fr;
+    row-gap: 6px;
+    padding-bottom: 10px;
+  }
+  .optionMain {
+    grid-template-columns: 48px 1fr;
+  }
+  .option > *:nth-child(2) {
+    justify-self: start;
+    margin-inline-start: 60px;
+  }
+}

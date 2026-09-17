@@ -46,6 +46,12 @@
   display: block;
 }
 
+/* The phone sits on its own line now that the quantity field is gone — the
+   quantities live on the picked products instead. */
+.rowSingle {
+  margin-bottom: 18px;
+}
+
 .fieldWide {
   margin-bottom: 24px;
 }
@@ -75,6 +81,14 @@
 
 .input[aria-invalid='true'] {
   border-color: #b3261e;
+}
+
+.notes {
+  /* A textarea does not inherit the page font on its own. */
+  font-family: inherit;
+  line-height: 1.7;
+  resize: vertical;
+  min-height: 92px;
 }
 
 .error {

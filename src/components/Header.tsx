@@ -56,11 +56,6 @@ export function Header() {
       </nav>
 
       <div className={styles.actions}>
-        <a href={site.phoneHref} className={styles.phone}>
-          <span className={styles.pip} aria-hidden="true" />
-          <bdi>{site.phoneDisplay}</bdi>
-        </a>
-
         {/* Always available on the catalog; elsewhere only once it has something,
             so a cart started on the catalog is never stranded. */}
         {(onCatalog || lineCount > 0) && <CartButton />}

@@ -59,23 +59,6 @@
   flex-shrink: 0;
 }
 
-.phone {
-  font-size: 15px;
-  color: var(--ink);
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  white-space: nowrap;
-}
-
-.pip {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--green);
-  display: inline-block;
-}
-
 .cta {
   background: var(--ink);
   color: var(--text-invert);
@@ -117,8 +100,8 @@
 }
 
 /* Phones: strip the header down to a centered logo over the nav links. The
-   phone, cart, and quote buttons all have reachable equivalents further down
-   (the cart gets its floating button once it has something in it), so the bar
+   cart and quote buttons both have reachable equivalents further down (the
+   cart gets its floating button once it has something in it), so the bar
    itself stays uncluttered at this width. */
 @media (max-width: 640px) {
   .header {

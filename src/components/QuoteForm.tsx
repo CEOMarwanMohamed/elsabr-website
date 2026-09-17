@@ -1,54 +1,64 @@
 import { useState, type FormEvent } from 'react';
+import type { CartLine } from '../cart/CartContext';
+import {
+  MAX_NOTES_LENGTH,
+  buildOrderMessage,
+  isWhatsappConfigured,
+  whatsappOrderUrl,
+} from '../cart/order';
 import { site } from '../data/site';
+import { ProductPicker } from './ProductPicker';
 import styles from './QuoteForm.module.css';
 
 interface QuoteFields {
   name: string;
   company: string;
   phone: string;
-  quantity: string;
-  product: string;
+  notes: string;
 }
 
 const EMPTY: QuoteFields = {
   name: '',
   company: '',
   phone: '',
-  quantity: '',
-  product: '',
+  notes: '',
 };
 
 const FIELD_LABELS: Record<keyof QuoteFields, string> = {
   name: 'الاسم',
   company: 'الشركة / الجهة',
   phone: 'رقم الموبايل',
-  quantity: 'الكمية التقريبية',
-  product: 'المنتج المطلوب',
+  notes: 'ملاحظات أو اطلب حاجة مش موجودة عندنا دلوقتي',
 };
+
+/** Opening line of the message this form sends. */
+const HEADING = 'طلب عرض سعر من موقع الصبر';
 
 // Egyptian mobile: 01 followed by 0/1/2/5 and 8 more digits, spaces allowed.
 const PHONE_RE = /^01[0125]\d{8}$/;
 
-function validate(values: QuoteFields) {
-  const errors: Partial<Record<keyof QuoteFields, string>> = {};
+type Errors = Partial<Record<keyof QuoteFields | 'products', string>>;
+
+function validate(values: QuoteFields, lines: CartLine[]) {
+  const errors: Errors = {};
   if (!values.name.trim()) errors.name = 'اكتب اسمك';
   if (!values.phone.trim()) errors.phone = 'اكتب رقم الموبايل';
   else if (!PHONE_RE.test(values.phone.replace(/[\s-]/g, '')))
     errors.phone = 'رقم الموبايل مش مظبوط';
-  if (!values.product.trim()) errors.product = 'اكتب المنتج المطلوب';
+  // Either half carries the request on its own: a pick from the catalogue, or
+  // a note asking for something it does not list yet.
+  if (lines.length === 0 && !values.notes.trim())
+    errors.products = 'اختر صنف من الكتالوج، أو اكتب اللي محتاجه تحت';
   return errors;
 }
 
 /**
- * The design has no backend behind this form. Until a submission endpoint
- * exists (a Cloudflare Pages Function or a form service), the request is handed
- * to the visitor's mail client so nothing is silently dropped.
+ * Fallback for when site.whatsapp is missing or malformed. The request is
+ * handed to the visitor's mail client so nothing is silently dropped.
  */
-function sendQuote(values: QuoteFields) {
-  const body = (Object.keys(FIELD_LABELS) as (keyof QuoteFields)[])
-    .map((key) => `${FIELD_LABELS[key]}: ${values[key] || '—'}`)
-    .join('\n');
+function mailQuote(values: QuoteFields, lines: CartLine[]) {
   const subject = `طلب عرض سعر — ${values.company.trim() || values.name.trim()}`;
+  const body = buildOrderMessage(lines, { ...values }, 'full', HEADING);
   window.location.href =
     `mailto:${site.email}` +
     `?subject=${encodeURIComponent(subject)}` +
@@ -57,7 +67,8 @@ function sendQuote(values: QuoteFields) {
 
 export function QuoteForm() {
   const [values, setValues] = useState<QuoteFields>(EMPTY);
-  const [errors, setErrors] = useState<Partial<Record<keyof QuoteFields, string>>>({});
+  const [lines, setLines] = useState<CartLine[]>([]);
+  const [errors, setErrors] = useState<Errors>({});
 
   const set = (key: keyof QuoteFields) => (e: { target: { value: string } }) => {
     setValues((v) => ({ ...v, [key]: e.target.value }));
@@ -65,9 +76,20 @@ export function QuoteForm() {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    const found = validate(values);
+    const found = validate(values, lines);
     setErrors(found);
-    if (Object.keys(found).length === 0) sendQuote(values);
+    if (Object.keys(found).length > 0) return;
+
+    const href = whatsappOrderUrl(lines, { ...values }, HEADING);
+    if (!href) {
+      mailQuote(values, lines);
+      return;
+    }
+    // Opened from the submit handler itself, so it counts as a user gesture
+    // and is not treated as a popup. A blocked window still falls through to
+    // navigating this tab rather than doing nothing.
+    const opened = window.open(href, '_blank', 'noopener,noreferrer');
+    if (!opened) window.location.href = href;
   };
 
   const field = (
@@ -117,14 +139,31 @@ export function QuoteForm() {
             {field('name', 'اسمك بالكامل')}
             {field('company', 'اسم الشركة')}
           </div>
-          <div className={styles.row}>
-            {field('phone', '01x xxxx xxxx', 'tel')}
-            {field('quantity', 'مثلاً 20 وحدة شهريًا')}
+          <div className={styles.rowSingle}>{field('phone', '01x xxxx xxxx', 'tel')}</div>
+
+          <div className={styles.fieldWide}>
+            <span className={styles.label}>المنتجات المطلوبة</span>
+            <ProductPicker value={lines} onChange={setLines} error={errors.products} />
           </div>
-          <div className={styles.fieldWide}>{field('product', 'مثلاً ورق A4 80 جرام')}</div>
+
+          <div className={styles.fieldWide}>
+            <label className={styles.label} htmlFor="quote-notes">
+              {FIELD_LABELS.notes}
+            </label>
+            <textarea
+              id="quote-notes"
+              name="notes"
+              rows={3}
+              maxLength={MAX_NOTES_LENGTH}
+              className={`${styles.input} ${styles.notes}`}
+              placeholder="اكتب أي تفاصيل، أو الصنف اللي محتاجه ومش لاقيه فوق"
+              value={values.notes}
+              onChange={set('notes')}
+            />
+          </div>
 
           <button type="submit" className={styles.submit}>
-            ابعت الطلب
+            {isWhatsappConfigured() ? 'ابعت الطلب على واتساب' : 'ابعت الطلب'}
           </button>
 
           <p className={styles.note}>
