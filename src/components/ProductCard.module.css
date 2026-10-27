@@ -92,6 +92,11 @@
   margin: 0;
 }
 
+.price strong {
+  font-size: 16px;
+  font-weight: 700;
+}
+
 .qtyRow {
   border-top: 1px solid var(--border-faint);
   padding-top: 14px;

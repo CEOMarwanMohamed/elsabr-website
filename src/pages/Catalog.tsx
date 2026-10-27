@@ -38,9 +38,8 @@ export default function Catalog() {
 
   const section = catalog.find((s) => s.id === tab) ?? catalog[0];
 
-  // No price sort: prices are never shown, and the ones in the catalogue data
-  // are demo values — sorting by an invisible placeholder misleads more than
-  // it helps. Bring it back when real prices are on the cards.
+  // No price sort: most products have no confirmed price yet (price: null), so
+  // a sort would just push them all to one end. Bring it back once most do.
   const products = useMemo(
     () => (onlyStock ? section.products.filter((p) => p.inStock) : section.products),
     [section, onlyStock],

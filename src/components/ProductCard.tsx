@@ -98,6 +98,14 @@ export function ProductCard({ product }: { product: Product }) {
           </dd>
           <dt className={styles.metaKey}>الوحدة</dt>
           <dd className={styles.metaVal}>{product.unit}</dd>
+          {product.price !== null && (
+            <>
+              <dt className={styles.metaKey}>السعر</dt>
+              <dd className={`${styles.metaVal} ${styles.price}`}>
+                تبدأ من <strong>{product.price.toLocaleString('en-US')}</strong> ج
+              </dd>
+            </>
+          )}
         </dl>
 
         <div className={styles.qtyRow}>
